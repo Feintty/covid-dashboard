@@ -44,7 +44,7 @@ const globalCases = async () => {
 }
 
 const countryCases = async () => {
-    global1 = await fetch ("https://api.covid19api.com/summary");
+    global1 = await fetch ("https://api.covid19api.com/summary")
         .then((res) => res.json())        
 }
 

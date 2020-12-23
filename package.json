@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Feintty/covid-dashboard#readme",
   "devDependencies": {
+    "leaflet": "^0.7.3",
     "webpack": "^5.10.3",
     "webpack-cli": "^4.2.0"
   },

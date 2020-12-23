@@ -1,3 +1,4 @@
+import L from './leaflet.js'
 export const createMapMarkup = (parent = document.body) => {
   const mapContainer = document.createElement("div"),
     mapPopup = document.createElement("div"),

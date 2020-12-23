@@ -1,33 +1,4 @@
-let countriesList, countriesFlagList;
-
-const fetchCountries = async () => {
-  countriesList = await fetch(
-    "https://api.covid19api.com/summary"
-  ).then((data) => data.json());
-};
-
-const fetchFlags = async () => {
-  countriesFlagList = await fetch(
-    "https://restcountries.eu/rest/v2/all?fields=name;population;flag"
-  ).then((data) => data.json());
-};
-
-const writeData = async () => {
-  await fetchCountries();
-  await fetchFlags();
-
-  putUlElements(
-    countriesFlagList,
-    sortByStats(countriesList.Countries, getSelectedStat()),
-    getSelectedStat()
-  );
-
-  inputEvent(() => reloadSortedList(countriesFlagList, countriesList));
-  radioChangeEvent(() => reloadSortedList(countriesFlagList, countriesList));
-  settingsClickEvent();
-};
-
-const createListMarkup = (parent = document.body) => {
+export const createListMarkup = (parent = document.body) => {
   const list = document.createElement("div"),
     listSearch = document.createElement("input"),
     listHeader = document.createElement("div"),
@@ -124,9 +95,11 @@ const createSettings = () => {
   list.append(settings);
 };
 
-const putUlElements = (flags, countries, stat) => {
+export const putUlElements = (flags, countries, stat) => {
   countries.forEach((el) => {
-    let flagOfCountry = flags.find((flag) => flag.name === el.Country);
+    let flagOfCountry = flags.find(
+      (flag) => flag.alpha2Code === el.CountryCode
+    );
     if (flagOfCountry !== undefined) {
       createULElement(el.Country, flagOfCountry.flag, el[stat]);
     } else {
@@ -139,26 +112,26 @@ const putUlElements = (flags, countries, stat) => {
   });
 };
 
-const inputEvent = (func) => {
+export const inputEvent = (func) => {
   const listInput = document.querySelector(".list__search");
   listInput.addEventListener("input", func);
 };
 
-const radioChangeEvent = (func) => {
+export const radioChangeEvent = (func) => {
   const radios = document.querySelectorAll('[name="list-radio"]');
   radios.forEach((radio) => radio.addEventListener("change", func));
 };
 
-const sortByStats = (countries, stat) => {
+export const sortByStats = (countries, stat) => {
   return countries.sort((a, b) => b[stat] - a[stat]);
 };
 
-const getSelectedStat = () => {
+export const getSelectedStat = () => {
   const radios = document.querySelectorAll('[name="list-radio"]');
   return Array.from(radios).find((el) => el.checked).value;
 };
 
-const reloadSortedList = (flags, countries) => {
+export const reloadSortedList = (flags, countries) => {
   const reg = new RegExp(
     `^${document.querySelector(".list__search").value.toLowerCase()}`
   );
@@ -175,13 +148,11 @@ const reloadSortedList = (flags, countries) => {
   );
 };
 
-const settingsClickEvent = () => {
-  settings = document.querySelector(".list__settings");
-  settingsWindow = document.querySelector(".list-settings");
+export const settingsClickEvent = () => {
+  const settings = document.querySelector(".list__settings");
+  const settingsWindow = document.querySelector(".list-settings");
   settings.addEventListener("click", () => {
     settingsWindow.classList.toggle("--hide");
   });
 };
 
-createListMarkup();
-writeData();

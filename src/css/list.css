@@ -1,6 +1,6 @@
 :root {
   --alt-color: rgb(233, 233, 233);
-  --main-color: rgb(139, 139, 139);
+  --main-color: rgb(8, 8, 8);
   --main-dark-color: rgb(100, 100, 100);
   --li-color: rgb(233, 233, 233);
 }
@@ -73,7 +73,7 @@
 }
 
 .list__li-stats {
-    color:rgb(204, 0, 0)
+    color:rgb(255, 0, 0)
 }
 
 .list-settings {

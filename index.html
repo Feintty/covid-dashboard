@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid dashboard</title>
     <link rel="stylesheet" href="./src/css/style.css">
+    <script src = "https://covid.amCharts.com/data/js/world_timeline.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@300;400&display=swap" rel="stylesheet">
 </head>
@@ -41,6 +42,14 @@
             </tr>
         </tbody>
     </table>
-    <script src="./src/build/bundle.js"></script>
+    <button class='btnConfirmed active'>Confirmed</button>
+    <button class='btnDeath'>Death</button>
+    <button class='btnRecovered'>Recovered</button>
+    <div class="graphics">
+        <canvas id="chart1"></canvas>
+        <canvas id="chart2"></canvas>
+        <canvas id="chart3"></canvas>
+    </div>    
+    <script src="./src/build/bundle.js"></script>    
 </body>
 </html>

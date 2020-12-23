@@ -5,6 +5,7 @@ let global1;
 let population;
 let listItem;
 let country = {}
+const codeCountries = [];
 
 function showNumbers(numbers, checkTotal, checkPer, popul, bool) {
     if (!checkTotal && !checkPer) {
@@ -31,7 +32,7 @@ function setNumbers(num1, num2, num3, bool) {
 }
 
 const fetchPopulation = async () => {
-    population = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population').then(res => res.json());                 
+    population = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population;alpha2Code').then(res => res.json());                 
 }  
 
 const globalCases = async () => {
@@ -40,6 +41,13 @@ const globalCases = async () => {
         .then((res) => {
             showNumbers(res.Global, checkTotal.checked, checkPer100.checked, 7827000000, false);
             console.log(res);
+            res.Countries.forEach((el) => {
+                const a = {
+                    country: el.Country,
+                    code: el.CountryCode
+                }
+                codeCountries.push(JSON.parse(JSON.stringify(a)))
+            })
         })
 }
 
@@ -61,10 +69,14 @@ checkPer100.addEventListener('change', () => {
 
 const findCountry = async (name) => {
     checkCountry = true;
+    let code; 
+    codeCountries.forEach((el) => {
+        if (el.country === name) code = el.code;
+    })
     await fetchPopulation();
     population.forEach(element  => {
-        if (element.name === name) {
-            country.name - element.name;
+        if (element.alpha2Code === code) {
+            country.name = name;
             country.population = element.population;
         }
     });
@@ -81,7 +93,7 @@ const findCountry = async (name) => {
     showNumbers(country, checkTotal.checked, checkPer100.checked, country.population, true);
    });
 }
-
+ 
 document.addEventListener('click', (e) => {
     if (e.target.className === 'list__li' || e.target.parentElement.className === 'list__li') {
         const name = e.target.children[1] ? e.target.children[1].innerText : e.target.parentElement.children[1].innerText;

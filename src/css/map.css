@@ -1,0 +1,30 @@
+#map{
+    width: 70vw;
+    height: 50vh;
+    border: 2px solid rgb(8, 8, 8);
+}
+
+svg.leaflet-zoom-animated > g > path {
+    transition-property: fill, fill-opacity, stroke, stroke-opacity, stroke-width;
+    transition:ease;
+    transition-duration: 0.3s;
+ }
+
+ .map__popup{
+     margin: 2%;
+    position: relative;
+     background-color: black;
+     top:0;
+    left:70%;
+     width: 20%;
+     height: 30%;
+     z-index: 9999;
+    opacity: 0.7;
+    font-size: 1em;
+    text-align: center;
+    border: 3px solid rgb(116, 12, 12);
+ }
+ .map__popup h3{
+     opacity: 1;
+     color: white;
+ }

@@ -163,7 +163,7 @@ const findCodeCountry = async (name) => {
 }
 
 document.addEventListener('click', (e) => {
-    if (e.target.className === 'list__li' || e.target.parentElement.className === 'list__li') {
+    if (e.target.classList.contains('list__li') || e.target.parentElement.classList.contains('list__li')) {
         const name = e.target.children[1] ? e.target.children[1].innerText : e.target.parentElement.children[1].innerText;
         findCodeCountry(name);
     }

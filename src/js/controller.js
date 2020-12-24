@@ -21,7 +21,7 @@ const fetchCountriesData = async () => {
   ).then((data) => data.json());
 };
 
-const createCurrentDate = (covid, parent = document.body) => {
+const createCurrentDate = (covid, parent = document.querySelector('.box1')) => {
   const date = document.createElement("div");
   date.className = "date";
   date.innerText = `Date: ${covid.Date.split("T")[0]}`;

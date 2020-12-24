@@ -97,7 +97,7 @@ const findCountry = async (name) => {
 document.addEventListener('click', (e) => {
     if (e.target.className === 'list__li' || e.target.parentElement.className === 'list__li') {
         const name = e.target.children[1] ? e.target.children[1].innerText : e.target.parentElement.children[1].innerText;
-        document.querySelector('.country').innerHTML = `${name}`;
+        document.querySelector('.country__td').innerHTML = `${name}`;
         findCountry(name);
         const active = e.target.children[1] ? e.target : e.target.parentElement;
         active.parentElement.childNodes.forEach((el) => {

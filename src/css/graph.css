@@ -18,10 +18,3 @@ canvas {
     border-color: black;
     column-gap: 2vw;
 }
-
-
-@media only screen and (max-width: 1144px) {    
-    .cards__wrapper {
-        width: 630px;
-    }
-}

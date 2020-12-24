@@ -23,7 +23,7 @@ export const createMapMarkup = (parent = document.body) => {
   mapBar.append(mapPopup);
   mapContainer.prepend(mapBar);
   parent.append(mapContainer);
-createMapHistory();
+createMapLegend();
   createSettings();
 };
 
@@ -71,29 +71,29 @@ const createSettings = () => {
   map.append(radios);
 };
 
-const createMapHistory = ()=>{
+const createMapLegend = ()=>{
   const map = document.querySelector(".map__bar");
-  const history =  document.createElement("div")
-  history.className = 'map__history'
+  const legend =  document.createElement("div")
+  legend.className = 'map__legend'
   for(let i =0;i<5;i++){
     const container =  document.createElement("div");
     const point =  document.createElement("div");
     const text =  document.createElement("div");
 
-    container.className = `history__container`;
-    point.className = `history__point${i}`;
-    text.className = `history__text${i}`;
+    container.className = `legend__container`;
+    point.className = `legend__point${i}`;
+    text.className = `legend__text${i}`;
 
     container.append(point);
     container.append(text);
-    history.append(container)
+    legend.append(container)
   }
-  map.append(history);
-  document.querySelector(".history__text0").innerText = '-Country boundaries';
-  document.querySelector(".history__text1").innerText = '-Country stats range';
-  document.querySelector(".history__text2").innerText = '-Country selected';
-  document.querySelector(".history__text3").innerText = '-Terrain';
-  document.querySelector(".history__text4").innerText = '-Water';
+  map.append(legend);
+  document.querySelector(".legend__text0").innerText = '-Country boundaries';
+  document.querySelector(".legend__text1").innerText = '-Country stats range';
+  document.querySelector(".legend__text2").innerText = '-Country selected';
+  document.querySelector(".legend__text3").innerText = '-Terrain';
+  document.querySelector(".legend__text4").innerText = '-Water';
 }
 
 export const radioChangeEventMap = (func) => {
@@ -126,10 +126,6 @@ export const createMapLayer = () => {
 export const focusByCoords = (coords,map)=>{
   map.setView(coords,5);
 }
-
-const createMarker = (x, y) => {
-  return new L.Marker([x, y]);
-};
 
 const createCircle = (coordinates, rad) => {
   const circleOptions = {

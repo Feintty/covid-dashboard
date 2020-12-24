@@ -47,7 +47,7 @@ svg.leaflet-zoom-animated > g > path {
      border: 3px solid rgb(116, 12, 12);
      background-color: black;
  }
- .map__history{
+ .map__legend{
     color: white;
     opacity: 0.7;
     width: 50%;
@@ -56,7 +56,7 @@ svg.leaflet-zoom-animated > g > path {
     background-color: black;
     padding: 5px;
  }
-.history__container{
+.legend__container{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -64,32 +64,32 @@ svg.leaflet-zoom-animated > g > path {
     
 }
 
- .history__point0{
+ .legend__point0{
      width: 15px;
      height: 3px;
      background-color: red;
      margin-right: 5px;
  }
- .history__point1{
+ .legend__point1{
     width: 15px;
     height: 15px;
     background-color: red;
     margin-right: 5px;
     border-radius: 15px;
 }
-.history__point2{
+.legend__point2{
     width: 15px;
     height: 15px;
     background-color: rgb(209, 209, 209);
     margin-right: 5px;
 }
-.history__point3{
+.legend__point3{
     width: 15px;
     height: 15px;
     background-color: rgb(10, 10, 10);
     margin-right: 5px;
 }
-.history__point4{
+.legend__point4{
     width: 15px;
     height: 15px;
     background-color: rgb(65, 65, 65);

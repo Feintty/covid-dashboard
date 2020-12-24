@@ -149,12 +149,7 @@ export const reloadSortedList = (flags, countries) => {
   );
 };
 
-export const countryClickEvent = (func)=>{
-const list = document.querySelectorAll(".list__li");
-list.forEach(el=>{
-  el.addEventListener('click',func);
-})
-}
+
 
 export const settingsClickEvent = () => {
   const settings = document.querySelector(".list__settings");

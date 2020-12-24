@@ -60,7 +60,21 @@ const makeMap = async () => {
     List.sortByStats(covidData.Countries, List.getSelectedStat()),
     List.getSelectedStat()
   );
-  List.inputEvent(() => List.reloadSortedList(countriesData, covidData));
+  List.inputEvent(() => {
+    List.reloadSortedList(countriesData, covidData);
+    const list = document.querySelectorAll(".list__li");
+    list.forEach((el) => {
+      const countryCode = covidData.Countries.find(
+        (country) => country.Country === el.getAttribute("country")
+      ).CountryCode;
+      const latlng = countriesData.find(
+        (country) => country.alpha2Code === countryCode
+      ).latlng;
+      el.addEventListener("click", () => {
+        MapLeaflet.focusByCoords(latlng, map);
+      });
+    });
+  });
   List.radioChangeEvent(() => List.reloadSortedList(countriesData, covidData));
   List.settingsClickEvent();
 

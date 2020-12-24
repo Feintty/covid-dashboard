@@ -21,6 +21,13 @@ const fetchCountriesData = async () => {
   ).then((data) => data.json());
 };
 
+const createCurrentDate = (covid, parent = document.body) => {
+  const date = document.createElement("div");
+  date.className = "date";
+  date.innerText = `Date: ${covid.Date.split("T")[0]}`;
+  parent.prepend(date);
+};
+
 const makeMap = async () => {
   await fetchCovidData();
   await fetchCountriesData();
@@ -36,27 +43,41 @@ const makeMap = async () => {
     map
   );
   circlesLayer.addTo(map);
+  MapLeaflet.radioChangeEventMap(() => {
+    map.removeLayer(circlesLayer);
+    circlesLayer = MapLeaflet.createCirclesLayer(
+      covidData,
+      countriesData,
+      MapLeaflet.getSelectedStat(),
+      0.1,
+      map
+    );
+    circlesLayer.addTo(map);
+  });
 
   List.putUlElements(
     countriesData,
     List.sortByStats(covidData.Countries, List.getSelectedStat()),
     List.getSelectedStat()
   );
-  List.inputEvent(() => reloadSortedList(countriesData, covidData));
-  List.radioChangeEvent(() => {
-    List.reloadSortedList(countriesData, covidData);
-    map.removeLayer(circlesLayer);
-    circlesLayer =  MapLeaflet.createCirclesLayer(
-      covidData,
-      countriesData,
-      List.getSelectedStat(),
-      0.1,
-      map
-    );
-    circlesLayer.addTo(map);
-  });
-  console.log(map)
+  List.inputEvent(() => List.reloadSortedList(countriesData, covidData));
+  List.radioChangeEvent(() => List.reloadSortedList(countriesData, covidData));
   List.settingsClickEvent();
+
+  const list = document.querySelectorAll(".list__li");
+  list.forEach((el) => {
+    const countryCode = covidData.Countries.find(
+      (country) => country.Country === el.getAttribute("country")
+    ).CountryCode;
+    const latlng = countriesData.find(
+      (country) => country.alpha2Code === countryCode
+    ).latlng;
+    el.addEventListener("click", () => {
+      MapLeaflet.focusByCoords(latlng, map);
+    });
+  });
+
+  createCurrentDate(covidData);
 };
 
 List.createListMarkup();

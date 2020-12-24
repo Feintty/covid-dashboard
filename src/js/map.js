@@ -5,9 +5,11 @@ export const createMapMarkup = (parent = document.body) => {
     popupCountry = document.createElement("h3"),
     popupTotal = document.createElement("h3"),
     popupDeaths = document.createElement("h3"),
-    popupRecovered = document.createElement("h3");
+    popupRecovered = document.createElement("h3"),
+    mapBar = document.createElement("div");
 
   mapContainer.id = "map";
+  mapBar.classList = "map__bar";
   mapPopup.className = "map__popup --hide";
   popupCountry.className = "popup__country";
   popupTotal.className = "popup__total";
@@ -18,9 +20,90 @@ export const createMapMarkup = (parent = document.body) => {
   mapPopup.append(popupTotal);
   mapPopup.append(popupDeaths);
   mapPopup.append(popupRecovered);
-
-  mapContainer.prepend(mapPopup);
+  mapBar.append(mapPopup);
+  mapContainer.prepend(mapBar);
   parent.append(mapContainer);
+createMapHistory();
+  createSettings();
+};
+
+const createSettings = () => {
+  const map = document.querySelector(".map__bar");
+  const settings = document.createElement("div"),
+    radios = document.createElement("div"),
+    radioTotal = document.createElement("input"),
+    radioDeaths = document.createElement("input"),
+    radioRecovered = document.createElement("input"),
+    radioTextTotal = document.createElement("label"),
+    radioTextDeaths = document.createElement("label"),
+    radioTextRecovered = document.createElement("label");
+
+  radios.className = "map-settings__radios";
+  radioTotal.className = "map-settings__radios-total";
+  radioDeaths.className = "map-settings__radios-deaths";
+  radioRecovered.className = "map-settings__radios-recovered";
+
+  radioTotal.setAttribute("type", "radio");
+  radioDeaths.setAttribute("type", "radio");
+  radioRecovered.setAttribute("type", "radio");
+
+  radioTotal.setAttribute("name", "map-radio");
+  radioDeaths.setAttribute("name", "map-radio");
+  radioRecovered.setAttribute("name", "map-radio");
+
+  radioTotal.setAttribute("value", "TotalConfirmed");
+  radioDeaths.setAttribute("value", "TotalDeaths");
+  radioRecovered.setAttribute("value", "TotalRecovered");
+  radioTotal.checked = true;
+
+  radios.append(radioTotal);
+  radioTextTotal.innerHTML = "Total confirmed<br>";
+  radios.append(radioTextTotal);
+
+  radios.append(radioDeaths);
+  radioTextDeaths.innerHTML = "Total deaths<br>";
+  radios.append(radioTextDeaths);
+
+  radios.append(radioRecovered);
+  radioTextRecovered.innerHTML = "Total recovered<br>";
+  radios.append(radioTextRecovered);
+
+  map.append(radios);
+};
+
+const createMapHistory = ()=>{
+  const map = document.querySelector(".map__bar");
+  const history =  document.createElement("div")
+  history.className = 'map__history'
+  for(let i =0;i<5;i++){
+    const container =  document.createElement("div");
+    const point =  document.createElement("div");
+    const text =  document.createElement("div");
+
+    container.className = `history__container`;
+    point.className = `history__point${i}`;
+    text.className = `history__text${i}`;
+
+    container.append(point);
+    container.append(text);
+    history.append(container)
+  }
+  map.append(history);
+  document.querySelector(".history__text0").innerText = '-Country boundaries';
+  document.querySelector(".history__text1").innerText = '-Country stats range';
+  document.querySelector(".history__text2").innerText = '-Country selected';
+  document.querySelector(".history__text3").innerText = '-Terrain';
+  document.querySelector(".history__text4").innerText = '-Water';
+}
+
+export const radioChangeEventMap = (func) => {
+  const radios = document.querySelectorAll('[name="map-radio"]');
+  radios.forEach((radio) => radio.addEventListener("change", func));
+};
+
+export const getSelectedStat = () => {
+  const radios = document.querySelectorAll('[name="map-radio"]');
+  return Array.from(radios).find((el) => el.checked).value;
 };
 
 const createMapOptions = () => {
@@ -39,6 +122,10 @@ export const createMapLayer = () => {
     "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
   );
 };
+
+export const focusByCoords = (coords,map)=>{
+  map.setView(coords,5);
+}
 
 const createMarker = (x, y) => {
   return new L.Marker([x, y]);

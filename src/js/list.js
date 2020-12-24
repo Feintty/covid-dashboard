@@ -34,6 +34,7 @@ const createULElement = (countryName, countryFlag, stats) => {
   liImage.className = "list__li-image";
   liName.className = "list__li-name";
   liStats.className = "list__li-stats";
+  liElement.setAttribute('country',countryName);
 
   liName.innerText = countryName;
   liStats.innerText = stats;
@@ -147,6 +148,8 @@ export const reloadSortedList = (flags, countries) => {
     getSelectedStat()
   );
 };
+
+
 
 export const settingsClickEvent = () => {
   const settings = document.querySelector(".list__settings");

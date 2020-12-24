@@ -85,7 +85,8 @@
 
 .list__li-image {
     width: 10%;
-  height : 100%;
+  /* height : 100%; */
+  background-repeat: no-repeat;
 }
 
 .list__li-stats {
@@ -108,7 +109,20 @@
 
 .list-settings:hover {
   cursor:pointer;
-  transform: rotate(180deg);
+}
+
+.list__settings {
+  transition: 0.2s;
+  outline: none;
+}
+.list__settings:hover {
+  cursor: pointer;
+  transform: rotate(190deg);
+}
+
+.list-settings__radios-total, .list-settings__radios-death, .list-settings__radios-recovered{
+  cursor:pointer;
+  outline: none;
 }
 
 .--hide{

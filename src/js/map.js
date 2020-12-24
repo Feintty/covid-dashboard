@@ -5,9 +5,11 @@ export const createMapMarkup = (parent = document.querySelector('.graphics_map')
     popupCountry = document.createElement("h3"),
     popupTotal = document.createElement("h3"),
     popupDeaths = document.createElement("h3"),
-    popupRecovered = document.createElement("h3");
+    popupRecovered = document.createElement("h3"),
+    mapBar = document.createElement("div");
 
   mapContainer.id = "map";
+  mapBar.classList = "map__bar";
   mapPopup.className = "map__popup --hide";
   popupCountry.className = "popup__country";
   popupTotal.className = "popup__total";
@@ -18,9 +20,90 @@ export const createMapMarkup = (parent = document.querySelector('.graphics_map')
   mapPopup.append(popupTotal);
   mapPopup.append(popupDeaths);
   mapPopup.append(popupRecovered);
-
-  mapContainer.prepend(mapPopup);
+  mapBar.append(mapPopup);
+  mapContainer.prepend(mapBar);
   parent.append(mapContainer);
+createMapLegend();
+  createSettings();
+};
+
+const createSettings = () => {
+  const map = document.querySelector(".map__bar");
+  const settings = document.createElement("div"),
+    radios = document.createElement("div"),
+    radioTotal = document.createElement("input"),
+    radioDeaths = document.createElement("input"),
+    radioRecovered = document.createElement("input"),
+    radioTextTotal = document.createElement("label"),
+    radioTextDeaths = document.createElement("label"),
+    radioTextRecovered = document.createElement("label");
+
+  radios.className = "map-settings__radios";
+  radioTotal.className = "map-settings__radios-total";
+  radioDeaths.className = "map-settings__radios-deaths";
+  radioRecovered.className = "map-settings__radios-recovered";
+
+  radioTotal.setAttribute("type", "radio");
+  radioDeaths.setAttribute("type", "radio");
+  radioRecovered.setAttribute("type", "radio");
+
+  radioTotal.setAttribute("name", "map-radio");
+  radioDeaths.setAttribute("name", "map-radio");
+  radioRecovered.setAttribute("name", "map-radio");
+
+  radioTotal.setAttribute("value", "TotalConfirmed");
+  radioDeaths.setAttribute("value", "TotalDeaths");
+  radioRecovered.setAttribute("value", "TotalRecovered");
+  radioTotal.checked = true;
+
+  radios.append(radioTotal);
+  radioTextTotal.innerHTML = "Total confirmed<br>";
+  radios.append(radioTextTotal);
+
+  radios.append(radioDeaths);
+  radioTextDeaths.innerHTML = "Total deaths<br>";
+  radios.append(radioTextDeaths);
+
+  radios.append(radioRecovered);
+  radioTextRecovered.innerHTML = "Total recovered<br>";
+  radios.append(radioTextRecovered);
+
+  map.append(radios);
+};
+
+const createMapLegend = ()=>{
+  const map = document.querySelector(".map__bar");
+  const legend =  document.createElement("div")
+  legend.className = 'map__legend'
+  for(let i =0;i<5;i++){
+    const container =  document.createElement("div");
+    const point =  document.createElement("div");
+    const text =  document.createElement("div");
+
+    container.className = `legend__container`;
+    point.className = `legend__point${i}`;
+    text.className = `legend__text${i}`;
+
+    container.append(point);
+    container.append(text);
+    legend.append(container)
+  }
+  map.append(legend);
+  document.querySelector(".legend__text0").innerText = '-Country boundaries';
+  document.querySelector(".legend__text1").innerText = '-Country stats range';
+  document.querySelector(".legend__text2").innerText = '-Country selected';
+  document.querySelector(".legend__text3").innerText = '-Terrain';
+  document.querySelector(".legend__text4").innerText = '-Water';
+}
+
+export const radioChangeEventMap = (func) => {
+  const radios = document.querySelectorAll('[name="map-radio"]');
+  radios.forEach((radio) => radio.addEventListener("change", func));
+};
+
+export const getSelectedStat = () => {
+  const radios = document.querySelectorAll('[name="map-radio"]');
+  return Array.from(radios).find((el) => el.checked).value;
 };
 
 const createMapOptions = () => {
@@ -40,9 +123,9 @@ export const createMapLayer = () => {
   );
 };
 
-const createMarker = (x, y) => {
-  return new L.Marker([x, y]);
-};
+export const focusByCoords = (coords,map)=>{
+  map.setView(coords,5);
+}
 
 const createCircle = (coordinates, rad) => {
   const circleOptions = {

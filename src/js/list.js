@@ -1,4 +1,4 @@
-export const createListMarkup = (parent = document.body) => {
+export const createListMarkup = (parent = document.querySelector('.data')) => {
   const list = document.createElement("div"),
     listSearch = document.createElement("input"),
     listHeader = document.createElement("div"),

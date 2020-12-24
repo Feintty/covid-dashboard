@@ -99,6 +99,11 @@ document.addEventListener('click', (e) => {
         const name = e.target.children[1] ? e.target.children[1].innerText : e.target.parentElement.children[1].innerText;
         document.querySelector('.country').innerHTML = `${name}`;
         findCountry(name);
+        const active = e.target.children[1] ? e.target : e.target.parentElement;
+        active.parentElement.childNodes.forEach((el) => {
+            if (el.classList.contains('active')) el.classList.remove('active')
+        })
+        active.classList.add('active');
     }
 })
 

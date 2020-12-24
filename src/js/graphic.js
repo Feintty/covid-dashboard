@@ -42,7 +42,7 @@ function createGraph(type, res, ctx) {
             {
                 label: `Global ${type}`,
                 data: res,
-                backgroundColor: 'orange'
+                backgroundColor: 'red'
             }
         ]        
       };    
@@ -62,17 +62,38 @@ btnDeath.addEventListener('click', () => {
     document.querySelector('#chart2').style.display = 'block';
     document.querySelector('#chart3').style.display = 'none';
     document.querySelector('#chart1').style.display = 'none';
+    btnDeath.classList.toggle('active');
+    if (btnConfirmed.classList.contains('active')) {
+        btnConfirmed.classList.toggle('active');
+    }
+    if (btnRecovered.classList.contains('active')) {
+        btnRecovered.classList.toggle('active');
+    }
 })
 btnRecovered.addEventListener('click', () => {
     document.querySelector('#chart3').style.display = 'block';
     document.querySelector('#chart2').style.display = 'none';
     document.querySelector('#chart1').style.display = 'none';
+    btnRecovered.classList.toggle('active');
+    if (btnConfirmed.classList.contains('active')) {
+        btnConfirmed.classList.toggle('active');
+    }
+    if (btnDeath.classList.contains('active')) {
+        btnDeath.classList.toggle('active');
+    }
 })
 
 btnConfirmed.addEventListener('click', () => {
     document.querySelector('#chart1').style.display = 'block';
     document.querySelector('#chart3').style.display = 'none';
     document.querySelector('#chart2').style.display = 'none';
+    btnConfirmed.classList.toggle('active');
+    if (btnRecovered.classList.contains('active')) {
+        btnRecovered.classList.toggle('active');
+    }
+    if (btnDeath.classList.contains('active')) {
+        btnDeath.classList.toggle('active');
+    }
 })
 
 const countries = async () => {
@@ -118,12 +139,18 @@ const findCodeCountry = async (name) => {
     document.querySelector('#chart3').remove();
     const ctx1 = document.createElement('canvas');
     ctx1.id = 'chart1';
+    ctx1.width = '200';
+    ctx1.height  ='60'
     document.querySelector('.graphics').append(ctx1);
     const ctx2 = document.createElement('canvas');
     ctx2.id = 'chart2';
+    ctx2.width = '200';
+    ctx2.height  ='60'
     document.querySelector('.graphics').append(ctx2);
     const ctx3 = document.createElement('canvas');
     ctx3.id = 'chart3';
+    ctx3.width = '200';
+    ctx3.height  ='60'
     document.querySelector('.graphics').append(ctx3);
     
 

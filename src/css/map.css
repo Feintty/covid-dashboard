@@ -1,7 +1,8 @@
 #map{
-    width: 70vw;
-    height: 50vh;
+    width: 69.8vw;
+    height: 59.7%;
     border: 2px solid rgb(8, 8, 8);
+    border-radius: 30px;
 }
 
 svg.leaflet-zoom-animated > g > path {
